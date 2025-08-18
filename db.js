@@ -2,11 +2,11 @@
 const sql = require('mssql');
 
 const config = {
-    user: 'isa',               // tu usuario
-    password: 'gato',           // tu contraseña
-    server: 'localhost\\\\SQLEXPRESS',
-    port: 1433, // o 'localhost\\SQLEXPRESS' si usas instancia nombrada
-    database: 'BRIGADA',
+    user: 'Isavethg_SQLLogin_1',               // tu usuario
+    password: 'gdjqzkbnpx',           // tu contraseña
+    server: 'BRIGADAS.mssql.somee.com',
+  // o 'localhost\\SQLEXPRESS' si usas instancia nombrada
+    database: 'BRIGADAS',
     options: {
         encrypt: false,           // false para conexión local sin TLS
         trustServerCertificate: true // necesario si no usas certificado SSL
