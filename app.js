@@ -6,7 +6,7 @@ const app = express();
 
 // Enable CORS for all routes
 app.use(cors({
-    origin: 'http://localhost:3000', // Allow only the frontend origin
+    origin: 'https://brigadas-front.vercel.app', // Allow only the frontend origin
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
