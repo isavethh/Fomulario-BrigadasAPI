@@ -77,8 +77,8 @@ app.get('/api/admin/brigadas/:id/pdf', authenticateAdmin, async (req, res) => {
     }
 });
 
-// Manejo de errores para rutas no encontradas
-app.use('*', (req, res) => {
+// Manejo de errores para rutas no encontradas (Express 5: no usar '*')
+app.use((req, res) => {
     res.status(404).json({ message: 'Ruta no encontrada' });
 });
 
