@@ -1,24 +1,3 @@
-// routes/inventario.js
-const express = require('express');
-const { requireRole } = require('../middleware/auth');
-const { poolPromise } = require('../db');
-
-const router = express.Router();
-
-// Solo encargados pueden gestionar inventario
-router.get('/inventario', requireRole('encargado'), async (req, res) => {
-    try {
-        const pool = await poolPromise;
-        const result = await pool.request().query(`
-      SELECT * FROM inventario ORDER BY categoria, item
-    `);
-        res.json(result.recordset);
-    } catch (error) {
-        console.error('Error al obtener inventario:', error);
-        res.status(500).json({ message: 'Error interno del servidor' });
-    }
-});
-
 // routes/brigadas.js
 const express = require('express');
 const { requireRole } = require('../middleware/auth');
