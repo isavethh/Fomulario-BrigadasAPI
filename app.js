@@ -4,12 +4,18 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const brigadaRouter = require('./routes/brigadas');
 const inventarioRouter = require('./routes/inventario');
+const authRouter = require('./routes/auth');
+const { poolPromise } = require('./db');
 
 const app = express();
 
 // Enable CORS for all routes
 app.use(cors({
-    origin: 'https://brigadas-front.vercel.app',
+    origin: [
+        'http://localhost:3000',
+        'http://127.0.0.1:3000',
+        'https://brigadas-front.vercel.app'
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
@@ -35,64 +41,22 @@ const authenticateAdmin = (req, res, next) => {
     });
 };
 
-// Rutas de autenticación solo para encargado
-app.post('/api/auth/login', async (req, res) => {
-    const { username, password } = req.body;
+// Rutas de autenticación (usa base de datos con fallback)
+app.use('/api/auth', authRouter);
 
-    if (!username || !password) {
-        return res.status(400).json({ message: 'Usuario y contraseña son requeridos' });
-    }
-
-    try {
-        // Solo el encargado necesita login
-        if (username === 'encargado' && password === 'password123') {
-            const token = jwt.sign(
-                { id: 1, username: 'encargado', role: 'encargado' },
-                process.env.JWT_SECRET || 'your-secret-key',
-                { expiresIn: '24h' }
-            );
-
-            return res.json({
-                token,
-                user: {
-                    id: 1,
-                    username: 'encargado',
-                    role: 'encargado'
-                }
-            });
-        } else {
-            return res.status(400).json({ message: 'Credenciales incorrectas' });
-        }
-    } catch (error) {
-        console.error('Error en login:', error);
-        res.status(500).json({ message: 'Error interno del servidor' });
-    }
-});
-
-// Rutas públicas de brigadas
+// Rutas públicas de brigadas (monta el router refactorizado)
 app.use('/api/brigadas', brigadaRouter);
 
-// Rutas de inventario - GET público, otras operaciones requieren admin
-app.get('/api/inventario', async (req, res) => {
-    try {
-        // Aquí va tu lógica para obtener el inventario
-        const inventario = []; // Esto debería venir de tu base de datos
-        res.json(inventario);
-    } catch (error) {
-        console.error('Error al obtener inventario:', error);
-        res.status(500).json({ message: 'Error interno del servidor' });
-    }
-});
-
-// Rutas protegidas de admin para inventario
+// Inventario: GET público en /api/inventario y CRUD admin en /api/admin/inventario
+app.use('/api/inventario', inventarioRouter);
 app.use('/api/admin/inventario', authenticateAdmin, inventarioRouter);
 
-// Ruta protegida para obtener brigadas (solo admin)
+// Ruta protegida para obtener brigadas (solo admin) - reutiliza router de brigadas si es necesario más adelante
 app.get('/api/admin/brigadas', authenticateAdmin, async (req, res) => {
     try {
-        // Aquí va tu lógica para obtener todas las brigadas
-        const brigadas = []; // Esto debería venir de tu base de datos
-        res.json(brigadas);
+        const pool = await poolPromise;
+        const result = await pool.request().query('SELECT * FROM brigada ORDER BY nombre');
+        res.json(result.recordset);
     } catch (error) {
         console.error('Error al obtener brigadas:', error);
         res.status(500).json({ message: 'Error interno del servidor' });

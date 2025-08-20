@@ -13,8 +13,8 @@ const handleDbError = (res, error, entity) => {
 // BRIGADA ENDPOINTS
 // ====================
 
-// Crear nueva brigada
-router.post('/brigada', async (req, res) => {
+// Crear nueva brigada (POST /api/brigadas)
+router.post('/', async (req, res) => {
     console.log('Solicitud POST recibida en /api/brigada');
     console.log('Datos recibidos:', req.body);
     
@@ -80,8 +80,8 @@ router.post('/brigada', async (req, res) => {
     }
 });
 
-// Obtener brigada por ID
-router.get('/brigada/:id', async (req, res) => {
+// Obtener brigada por ID (GET /api/brigadas/:id)
+router.get('/:id', async (req, res) => {
     try {
         const pool = await poolPromise;
         const result = await pool.request()
@@ -98,8 +98,8 @@ router.get('/brigada/:id', async (req, res) => {
     }
 });
 
-// Actualizar brigada
-router.put('/brigada/:id', async (req, res) => {
+// Actualizar brigada (PUT /api/brigadas/:id)
+router.put('/:id', async (req, res) => {
     try {
         const { nombre, cantidadactivos, nombrecomandante, celularcomandante, encargadologistica, celularlogistica, numerosemergencia } = req.body;
         
@@ -135,8 +135,8 @@ router.put('/brigada/:id', async (req, res) => {
 // EPP ROPA ENDPOINTS
 // ====================
 
-// Agregar/Actualizar EPP Ropa
-router.post('/brigada/:id/epp-ropa', async (req, res) => {
+// Agregar/Actualizar EPP Ropa (POST /api/brigadas/:id/epp-ropa)
+router.post('/:id/epp-ropa', async (req, res) => {
     console.log('Solicitud POST recibida en /api/brigada/:id/epp-ropa');
     console.log('Datos recibidos:', req.body);
     
@@ -228,8 +228,8 @@ router.post('/brigada/:id/epp-ropa', async (req, res) => {
     }
 });
 
-// Obtener EPP Ropa de una brigada
-router.get('/brigada/:id/epp-ropa', async (req, res) => {
+// Obtener EPP Ropa de una brigada (GET /api/brigadas/:id/epp-ropa)
+router.get('/:id/epp-ropa', async (req, res) => {
     try {
         const pool = await poolPromise;
         const result = await pool.request()
@@ -242,8 +242,8 @@ router.get('/brigada/:id/epp-ropa', async (req, res) => {
     }
 });
 
-// Eliminar ítem de EPP Ropa
-router.delete('/brigada/:id/epp-ropa/:itemId', async (req, res) => {
+// Eliminar ítem de EPP Ropa (DELETE /api/brigadas/:id/epp-ropa/:itemId)
+router.delete('/:id/epp-ropa/:itemId', async (req, res) => {
     try {
         const pool = await poolPromise;
         await pool.request()
@@ -260,8 +260,8 @@ router.delete('/brigada/:id/epp-ropa/:itemId', async (req, res) => {
 // BOTAS ENDPOINTS
 // ====================
 
-// Agregar/Actualizar Botas
-router.post('/brigada/:id/botas', async (req, res) => {
+// Agregar/Actualizar Botas (POST /api/brigadas/:id/botas)
+router.post('/:id/botas', async (req, res) => {
     console.log('Solicitud POST recibida en /api/brigada/:id/botas');
     console.log('Datos recibidos:', req.body);
     
@@ -353,8 +353,8 @@ router.post('/brigada/:id/botas', async (req, res) => {
     }
 });
 
-// Obtener Botas de una brigada
-router.get('/brigada/:id/botas', async (req, res) => {
+// Obtener Botas de una brigada (GET /api/brigadas/:id/botas)
+router.get('/:id/botas', async (req, res) => {
     try {
         const pool = await poolPromise;
         const result = await pool.request()
@@ -371,8 +371,8 @@ router.get('/brigada/:id/botas', async (req, res) => {
 // GUANTES ENDPOINTS
 // ====================
 
-// Agregar/Actualizar Guantes
-router.post('/brigada/:id/guantes', async (req, res) => {
+// Agregar/Actualizar Guantes (POST /api/brigadas/:id/guantes)
+router.post('/:id/guantes', async (req, res) => {
     try {
         const { xs, s, m, l, xl, xxl, otratalla } = req.body;
         const nums = { xs, s, m, l, xl, xxl };
@@ -427,8 +427,8 @@ router.post('/brigada/:id/guantes', async (req, res) => {
     }
 });
 
-// Obtener Guantes de una brigada
-router.get('/brigada/:id/guantes', async (req, res) => {
+// Obtener Guantes de una brigada (GET /api/brigadas/:id/guantes)
+router.get('/:id/guantes', async (req, res) => {
     try {
         const pool = await poolPromise;
         const result = await pool.request()
@@ -445,8 +445,8 @@ router.get('/brigada/:id/guantes', async (req, res) => {
 // EPP EQUIPO ENDPOINTS
 // ====================
 
-// Agregar ítem de EPP Equipo
-router.post('/brigada/:id/epp-equipo', async (req, res) => {
+// Agregar ítem de EPP Equipo (POST /api/brigadas/:id/epp-equipo)
+router.post('/:id/epp-equipo', async (req, res) => {
     try {
         const { item, cantidad, observaciones } = req.body;
         if (!item) return res.status(400).json({ success: false, message: 'item es requerido' });
@@ -471,8 +471,8 @@ router.post('/brigada/:id/epp-equipo', async (req, res) => {
     }
 });
 
-// Obtener EPP Equipo de una brigada
-router.get('/brigada/:id/epp-equipo', async (req, res) => {
+// Obtener EPP Equipo de una brigada (GET /api/brigadas/:id/epp-equipo)
+router.get('/:id/epp-equipo', async (req, res) => {
     try {
         const pool = await poolPromise;
         const result = await pool.request()
@@ -485,8 +485,8 @@ router.get('/brigada/:id/epp-equipo', async (req, res) => {
     }
 });
 
-// Eliminar ítem de EPP Equipo
-router.delete('/brigada/:id/epp-equipo/:itemId', async (req, res) => {
+// Eliminar ítem de EPP Equipo (DELETE /api/brigadas/:id/epp-equipo/:itemId)
+router.delete('/:id/epp-equipo/:itemId', async (req, res) => {
     try {
         const pool = await poolPromise;
         await pool.request()
@@ -503,8 +503,8 @@ router.delete('/brigada/:id/epp-equipo/:itemId', async (req, res) => {
 // HERRAMIENTAS ENDPOINTS
 // ====================
 
-// Agregar ítem de Herramientas
-router.post('/brigada/:id/herramientas', async (req, res) => {
+// Agregar ítem de Herramientas (POST /api/brigadas/:id/herramientas)
+router.post('/:id/herramientas', async (req, res) => {
     try {
         const { item, cantidad, observaciones } = req.body;
         if (!item) return res.status(400).json({ success: false, message: 'item es requerido' });
@@ -529,8 +529,8 @@ router.post('/brigada/:id/herramientas', async (req, res) => {
     }
 });
 
-// Obtener Herramientas de una brigada
-router.get('/brigada/:id/herramientas', async (req, res) => {
+// Obtener Herramientas de una brigada (GET /api/brigadas/:id/herramientas)
+router.get('/:id/herramientas', async (req, res) => {
     try {
         const pool = await poolPromise;
         const result = await pool.request()
@@ -543,8 +543,8 @@ router.get('/brigada/:id/herramientas', async (req, res) => {
     }
 });
 
-// Eliminar ítem de Herramientas
-router.delete('/brigada/:id/herramientas/:itemId', async (req, res) => {
+// Eliminar ítem de Herramientas (DELETE /api/brigadas/:id/herramientas/:itemId)
+router.delete('/:id/herramientas/:itemId', async (req, res) => {
     try {
         const pool = await poolPromise;
         await pool.request()
@@ -561,8 +561,8 @@ router.delete('/brigada/:id/herramientas/:itemId', async (req, res) => {
 // LOGÍSTICA REPUESTOS ENDPOINTS
 // ====================
 
-// Agregar ítem de Logística Repuestos
-router.post('/brigada/:id/logistica-repuestos', async (req, res) => {
+// Agregar ítem de Logística Repuestos (POST /api/brigadas/:id/logistica-repuestos)
+router.post('/:id/logistica-repuestos', async (req, res) => {
     try {
         const { item, costo, observaciones } = req.body;
         if (!item) return res.status(400).json({ success: false, message: 'item es requerido' });
@@ -587,8 +587,8 @@ router.post('/brigada/:id/logistica-repuestos', async (req, res) => {
     }
 });
 
-// Obtener Logística Repuestos de una brigada
-router.get('/brigada/:id/logistica-repuestos', async (req, res) => {
+// Obtener Logística Repuestos de una brigada (GET /api/brigadas/:id/logistica-repuestos)
+router.get('/:id/logistica-repuestos', async (req, res) => {
     try {
         const pool = await poolPromise;
         const result = await pool.request()
@@ -601,8 +601,8 @@ router.get('/brigada/:id/logistica-repuestos', async (req, res) => {
     }
 });
 
-// Eliminar ítem de Logística Repuestos
-router.delete('/brigada/:id/logistica-repuestos/:itemId', async (req, res) => {
+// Eliminar ítem de Logística Repuestos (DELETE /api/brigadas/:id/logistica-repuestos/:itemId)
+router.delete('/:id/logistica-repuestos/:itemId', async (req, res) => {
     try {
         const pool = await poolPromise;
         await pool.request()
@@ -619,8 +619,8 @@ router.delete('/brigada/:id/logistica-repuestos/:itemId', async (req, res) => {
 // ALIMENTACIÓN ENDPOINTS
 // ====================
 
-// Agregar ítem de Alimentación
-router.post('/brigada/:id/alimentacion', async (req, res) => {
+// Agregar ítem de Alimentación (POST /api/brigadas/:id/alimentacion)
+router.post('/:id/alimentacion', async (req, res) => {
     try {
         const { item, cantidad, observaciones } = req.body;
         if (!item) return res.status(400).json({ success: false, message: 'item es requerido' });
@@ -645,8 +645,8 @@ router.post('/brigada/:id/alimentacion', async (req, res) => {
     }
 });
 
-// Obtener Alimentación de una brigada
-router.get('/brigada/:id/alimentacion', async (req, res) => {
+// Obtener Alimentación de una brigada (GET /api/brigadas/:id/alimentacion)
+router.get('/:id/alimentacion', async (req, res) => {
     try {
         const pool = await poolPromise;
         const result = await pool.request()
@@ -659,8 +659,8 @@ router.get('/brigada/:id/alimentacion', async (req, res) => {
     }
 });
 
-// Eliminar ítem de Alimentación
-router.delete('/brigada/:id/alimentacion/:itemId', async (req, res) => {
+// Eliminar ítem de Alimentación (DELETE /api/brigadas/:id/alimentacion/:itemId)
+router.delete('/:id/alimentacion/:itemId', async (req, res) => {
     try {
         const pool = await poolPromise;
         await pool.request()
@@ -677,8 +677,8 @@ router.delete('/brigada/:id/alimentacion/:itemId', async (req, res) => {
 // LOGÍSTICA CAMPO ENDPOINTS
 // ====================
 
-// Agregar ítem de Logística Campo
-router.post('/brigada/:id/logistica-campo', async (req, res) => {
+// Agregar ítem de Logística Campo (POST /api/brigadas/:id/logistica-campo)
+router.post('/:id/logistica-campo', async (req, res) => {
     try {
         const { item, cantidad, observaciones } = req.body;
         if (!item) return res.status(400).json({ success: false, message: 'item es requerido' });
@@ -703,8 +703,8 @@ router.post('/brigada/:id/logistica-campo', async (req, res) => {
     }
 });
 
-// Obtener Logística Campo de una brigada
-router.get('/brigada/:id/logistica-campo', async (req, res) => {
+// Obtener Logística Campo de una brigada (GET /api/brigadas/:id/logistica-campo)
+router.get('/:id/logistica-campo', async (req, res) => {
     try {
         const pool = await poolPromise;
         const result = await pool.request()
@@ -717,8 +717,8 @@ router.get('/brigada/:id/logistica-campo', async (req, res) => {
     }
 });
 
-// Eliminar ítem de Logística Campo
-router.delete('/brigada/:id/logistica-campo/:itemId', async (req, res) => {
+// Eliminar ítem de Logística Campo (DELETE /api/brigadas/:id/logistica-campo/:itemId)
+router.delete('/:id/logistica-campo/:itemId', async (req, res) => {
     try {
         const pool = await poolPromise;
         await pool.request()
@@ -735,8 +735,8 @@ router.delete('/brigada/:id/logistica-campo/:itemId', async (req, res) => {
 // LIMPIEZA PERSONAL ENDPOINTS
 // ====================
 
-// Agregar ítem de Limpieza Personal
-router.post('/brigada/:id/limpieza-personal', async (req, res) => {
+// Agregar ítem de Limpieza Personal (POST /api/brigadas/:id/limpieza-personal)
+router.post('/:id/limpieza-personal', async (req, res) => {
     try {
         const { item, cantidad, observaciones } = req.body;
         if (!item) return res.status(400).json({ success: false, message: 'item es requerido' });
@@ -761,8 +761,8 @@ router.post('/brigada/:id/limpieza-personal', async (req, res) => {
     }
 });
 
-// Obtener Limpieza Personal de una brigada
-router.get('/brigada/:id/limpieza-personal', async (req, res) => {
+// Obtener Limpieza Personal de una brigada (GET /api/brigadas/:id/limpieza-personal)
+router.get('/:id/limpieza-personal', async (req, res) => {
     try {
         const pool = await poolPromise;
         const result = await pool.request()
@@ -775,8 +775,8 @@ router.get('/brigada/:id/limpieza-personal', async (req, res) => {
     }
 });
 
-// Eliminar ítem de Limpieza Personal
-router.delete('/brigada/:id/limpieza-personal/:itemId', async (req, res) => {
+// Eliminar ítem de Limpieza Personal (DELETE /api/brigadas/:id/limpieza-personal/:itemId)
+router.delete('/:id/limpieza-personal/:itemId', async (req, res) => {
     try {
         const pool = await poolPromise;
         await pool.request()
@@ -793,8 +793,8 @@ router.delete('/brigada/:id/limpieza-personal/:itemId', async (req, res) => {
 // LIMPIEZA GENERAL ENDPOINTS
 // ====================
 
-// Agregar ítem de Limpieza General
-router.post('/brigada/:id/limpieza-general', async (req, res) => {
+// Agregar ítem de Limpieza General (POST /api/brigadas/:id/limpieza-general)
+router.post('/:id/limpieza-general', async (req, res) => {
     try {
         const { item, cantidad, observaciones } = req.body;
         if (!item) return res.status(400).json({ success: false, message: 'item es requerido' });
@@ -819,8 +819,8 @@ router.post('/brigada/:id/limpieza-general', async (req, res) => {
     }
 });
 
-// Obtener Limpieza General de una brigada
-router.get('/brigada/:id/limpieza-general', async (req, res) => {
+// Obtener Limpieza General de una brigada (GET /api/brigadas/:id/limpieza-general)
+router.get('/:id/limpieza-general', async (req, res) => {
     try {
         const pool = await poolPromise;
         const result = await pool.request()
@@ -833,8 +833,8 @@ router.get('/brigada/:id/limpieza-general', async (req, res) => {
     }
 });
 
-// Eliminar ítem de Limpieza General
-router.delete('/brigada/:id/limpieza-general/:itemId', async (req, res) => {
+// Eliminar ítem de Limpieza General (DELETE /api/brigadas/:id/limpieza-general/:itemId)
+router.delete('/:id/limpieza-general/:itemId', async (req, res) => {
     try {
         const pool = await poolPromise;
         await pool.request()
@@ -851,8 +851,8 @@ router.delete('/brigada/:id/limpieza-general/:itemId', async (req, res) => {
 // MEDICAMENTOS ENDPOINTS
 // ====================
 
-// Agregar ítem de Medicamentos
-router.post('/brigada/:id/medicamentos', async (req, res) => {
+// Agregar ítem de Medicamentos (POST /api/brigadas/:id/medicamentos)
+router.post('/:id/medicamentos', async (req, res) => {
     try {
         const { item, cantidad, observaciones } = req.body;
         if (!item) return res.status(400).json({ success: false, message: 'item es requerido' });
@@ -877,8 +877,8 @@ router.post('/brigada/:id/medicamentos', async (req, res) => {
     }
 });
 
-// Obtener Medicamentos de una brigada
-router.get('/brigada/:id/medicamentos', async (req, res) => {
+// Obtener Medicamentos de una brigada (GET /api/brigadas/:id/medicamentos)
+router.get('/:id/medicamentos', async (req, res) => {
     try {
         const pool = await poolPromise;
         const result = await pool.request()
@@ -891,8 +891,8 @@ router.get('/brigada/:id/medicamentos', async (req, res) => {
     }
 });
 
-// Eliminar ítem de Medicamentos
-router.delete('/brigada/:id/medicamentos/:itemId', async (req, res) => {
+// Eliminar ítem de Medicamentos (DELETE /api/brigadas/:id/medicamentos/:itemId)
+router.delete('/:id/medicamentos/:itemId', async (req, res) => {
     try {
         const pool = await poolPromise;
         await pool.request()
@@ -935,8 +935,8 @@ router.post('/brigada/:id/rescate-animal', async (req, res) => {
     }
 });
 
-// Obtener Rescate Animal de una brigada
-router.get('/brigada/:id/rescate-animal', async (req, res) => {
+// Obtener Rescate Animal de una brigada (GET /api/brigadas/:id/rescate-animal)
+router.get('/:id/rescate-animal', async (req, res) => {
     try {
         const pool = await poolPromise;
         const result = await pool.request()
@@ -949,8 +949,8 @@ router.get('/brigada/:id/rescate-animal', async (req, res) => {
     }
 });
 
-// Eliminar ítem de Rescate Animal
-router.delete('/brigada/:id/rescate-animal/:itemId', async (req, res) => {
+// Eliminar ítem de Rescate Animal (DELETE /api/brigadas/:id/rescate-animal/:itemId)
+router.delete('/:id/rescate-animal/:itemId', async (req, res) => {
     try {
         const pool = await poolPromise;
         await pool.request()
@@ -964,9 +964,9 @@ router.delete('/brigada/:id/rescate-animal/:itemId', async (req, res) => {
 });
 
 // ====================
-// GET /brigada (Obtener todas las brigadas)
+// GET / (Obtener todas las brigadas)
 // ====================
-router.get('/brigada', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const pool = await poolPromise;
         const result = await pool.request().query('SELECT * FROM brigada');
