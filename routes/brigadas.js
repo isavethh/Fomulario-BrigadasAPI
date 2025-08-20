@@ -909,8 +909,7 @@ router.delete('/:id/medicamentos/:itemId', async (req, res) => {
 // RESCATE ANIMAL ENDPOINTS
 // ====================
 
-// Agregar ítem de Rescate Animal
-router.post('/brigada/:id/rescate-animal', async (req, res) => {
+router.post('/:id/rescate-animal', async (req, res) => {
     try {
         const { item, cantidad, observaciones } = req.body;
         if (!item) return res.status(400).json({ success: false, message: 'item es requerido' });
