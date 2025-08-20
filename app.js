@@ -67,9 +67,8 @@ app.get('/api/admin/brigadas', authenticateAdmin, async (req, res) => {
 app.get('/api/admin/brigadas/:id/pdf', authenticateAdmin, async (req, res) => {
     try {
         const { id } = req.params;
-        // Lógica para generar PDF
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', `attachment; filename=formulario-brigada-${id}.pdf`);
+        // Placeholder: aún no generamos PDF real → devolver 204 para que el cliente no falle
+        return res.status(204).end();
         // res.send(pdfBuffer);
     } catch (error) {
         console.error('Error al generar PDF:', error);

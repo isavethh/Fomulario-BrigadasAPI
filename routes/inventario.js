@@ -12,10 +12,15 @@ router.get('/', async (req, res) => {
         const result = await pool.request().query(`
             SELECT TOP 200 * FROM inventario ORDER BY id DESC
         `);
-        res.json(result.recordset);
+        return res.json(result.recordset);
     } catch (error) {
+        // Si la tabla no existe, devolver lista vacía en vez de 500
+        if (error?.number === 208 || /Invalid object name 'inventario'/i.test(error?.message || '')) {
+            console.warn('Inventario: tabla no existe. Devolviendo [].');
+            return res.json([]);
+        }
         console.error('Error al obtener inventario:', error);
-        res.status(500).json({ message: 'Error interno del servidor' });
+        return res.status(500).json({ message: 'Error interno del servidor' });
     }
 });
 
